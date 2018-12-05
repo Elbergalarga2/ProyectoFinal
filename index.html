@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="shortcut icon" type="image/x-icon" href="Floresita%20perrona.png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> <!--Hace que la página se ajuste a la pantalla-->
+		<meta charset="UTF-8"> <!-- manejo de caracteres especiales-->
+		<meta name="description" content="Proyecto Final"> <!-- se agrega la descripción de la página-->
+		<meta name="author" content="David Zañudo" > <!-- Define al autor de la página-->
+		<title>Proyecto Final</title>
+                                <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<head/>
+<header><h1>Proyecto Final</h1></header>
+<body>
+    <h2>Primer paso: Buscar si hay alguna actualizacion para el Ubuntu</h2>
+	<p>Para hacer esto pon el siguiente codigo:<b>sudo apt update</b>, te pedira la contraseña para esto.</p>
+    <img src="0.1.png">
+    
+    <h2>Segundo paso: Instalar las actualizacion para el Ubuntu</h2>
+    <p>Para esto pon el siguiente codigo:<b>sudo apt upgrade</b></p>
+    <img src="0.2.png">
+    
+    <h2>Tercer paso: Instalacion de (APACHE, MYSQL y PHP)</h2>
+    <h3>Para instalar Apache pon el siguiente codigo:<b>sudo apt ("apache2", "mysql-server" y "php_mysql")</b></h3>
+    <img src="1.png">
+    
+    <h2>Cuarto paso: Comprobar la tarjeta de red</h2>
+	<p>Para comprobar la tarjeta de red pon el siguiente codigo:</p>
+    <img src="2.1.png">
+    <p>Debe salir algo asi, si no es asi has lo siguiente, apaga la maquina virtual y ve a configuracion</p>
+    <img src="Red1.png">
+    <p>Luego ve a red</p>
+    <img src="Red2.png">
+    <p>Por ultimo ve a adaptador 2, dale a "Habilitar adaptador de red", luego a "conectado a" y pon la opcion de Adaptador sólo-anfitrion, por ultimo en nombre pon "VirtualBox Host-Only Ethernet Adapter #3"</p>
+    <img src="Red3.png">
+    
+    <h2>Quinto paso: Activar Servicios</h2>
+	<p>Para activar apache y mysql pon el siguiente codigo: <b>sudo service ("apache2" y "mysql") start</b></p>
+    <img src="2.2.png">
+    
+    <h2>Sexto paso: Comprobar estado de los servicios</h2>
+	<p>Para comprobar el estado de los servicios activos pon el siguiente codigo: <b>service --status-all | grep ("apache2" y "mysql")</b>, si aparece con un signo + significa que esta activado pero si por contrario sale - es que aun no lo as activado</p>
+    <img src="3.png">
+    
+    <h2>Septimo: Clonar repositorio</h2>
+	<p>Para clonar el repositorio, muevete a la carpeta html con este comando: <b>cd /var/www/html</b>, una vez ahi pon el siguiente codigo: <b>sudo git clone https://github.com/dgeti-cetis108/Programacion-M4S2-2018.git</b></p>
+    <img src="4.png">
+    
+    <p>una vez clonado cambiale el nombre a <b>"library.com"</b>, pon el siguiente codigo para eso: <b>sudo mv Programacion-M4S2-2018/ library.com</b></p>
+    <img src=5.png>
+    
+    <h2>Octavo paso: Poner en uso la base de datos</h2>
+	<p>Para poner en uso la base de datos pon el siguiente codigo: <b>cd library.com/db</b></p>
+    <img src="6.png">
+    
+    <p>pone el siguiente codigo: <b>sudo nano library.sql</b>, entraras al editor de archivos, pon <b>USE `library`;</b>, despues da a <b>("ctrl + o" y "ctrl + x")</b></p>
+    <p>ya que sales pon el siguiente codigo: <b>cat library.sql</b>, asi confirmas que guardamos los cambios</p>
+    <img src="7.png">
+    
+    <h2>Noveno paso: Conectar MySQL</h2>
+	<p>Para conectar el MySQL necesitamos permisos de administrador, para tener los permisos pon el siguiente codigo: <b>sudo -i</b></p>
+    <img src="9.png">
+    
+    <p>ya que tengamos permisos root pon el siguiente codigo <b>mysql</b></p>
+    <img src="10.png">
+    
+    <p>dentro de mysql pon el siguiente codigo<b> source /var/www/html/library.com/db/library.sql</b>, ya tenemos la base de datos pon el siguiente codigo: <b>show databases;</b>, eso nos mostrara la base de datos</p>
+    
+    <h2>Decimo paso: Crear un usuario en MySQL</h2>
+	<p>Para crear un usuario pon el siguiente codigo: <b>create user 'david'@'localhost' identified by '123';</b></p>
+    <img src="13.png">
+    <p>tienes que dar permisos para poder configurar la base de datos, esto se hace con el siguiente codigo: <b>grant all on library.* to 'usuario'@'localhost';</b></p>
+    <img src=14.png>
+    
+    <h2>Undecimo paso: Probar la conexion de MySQL</h2>
+    <p>Antes de nada debes salir de mysql con el siguiente codigo: <b>exit</b>, tambien de el root con el siguiente codigo: <b>exit</b></p>
+    <p>Para probar la conexion pon el siguiente codigo: <b>mysql -u usuario -p  =Es para probar la conexión</b></p>
+    <img src="15.png">
+    
+    <h2>Duodecimo paso: Cambiar usuario y contraseña</h2>
+    <p>Para moverte pon el siguiente codigo: <b>cd library.com/classes</b></p>
+    <img src="16.png">
+	<p>Para cambiar el usuario y contraseña pon el siguiente codigo: </p>
+    <img src="17.png">
+    <p>Aqui tenemos que editar el usuario y la contraseña a los que hicimos hace algunos momentos</p>
+    <p>Sale asi</p>
+    <img src="18.png">
+    <p>Debe quedar asi</p>
+    <img src=19.png>
+    
+    <h2>Trijecimo paso: Configurar VirtualHost</h2>
+    <p>Para moverte pon el siguiente codigo: <b>cd /etc/apache2/sites-available</b></p>
+    <p>Pon el codigo: <b>sudo nano library.com.conf</b> paraeditar el archivo y agregamos el siguiente codigo:</p>
+    <br>   &lt;VirualHost *.80&gt;
+    <br>   &ensp; ServerName library.com 
+    <br>   &ensp; ServerAlias www.library.com
+    <br>   &ensp; ServerAdmin danielrendon1101@gmail.com
+    <br>   &ensp; DocumentRoot /var/www/html/library.com
+    <br>   &ensp; ErrorLog /var/log/library.com-error.log
+    <br>   &ensp; CustomLog /var/log/library.com-access.log Common
+    <br>  &lt;/VirualHost&gt;
+    <p>Pon los siguientes codigos para guardar y slir: <b>Ctrl+O y Ctrl+X</b></p>
+    <p>Pon el siguientes codigos: <b>sudo a2ensite library.com</b> para hablilitar el dominio</p>
+    <p>Pon el codigo: <b>systemctl reload apache2</b>, Debe de aparecer lo siguiente: <b>Site library.com already enabled</b></p>
+    <p>Pon este codigo para reiniciar el servicio de apache: <b>sudo service apache2 restart</b></p>
+    <p>Pon el codigo: <b>sudo nano /etc/host</b> y agrega lo siguiente:</p>
+    <br>&ensp; 127.0.0.1 library.com
+    <br>&ensp; 127.0.0.1 www.library.com
+    <p>Pon los siguientes codigos para guardar y slir: <b>Ctrl+O y Ctrl+X</b></p>
+    <p>Abre el Bloc de notas como administrador y abre el archivo Hosts que se encuentra en: <b>C:\Windows\System32\drivers\etc</b></p>
+    <p>Agrega la ip de la red enp0s8 acompañada del dominio</p>
+       <br>  &ensp; 192.168.56.101 library.com
+       <br>  &ensp; 192.168.56.101 www.library.com
+    
+    <p>Por ultimo pon library.com para ver si sale la aplicacion de iniciar sesion, si es asi ya as acabado.</p>
+</body>
